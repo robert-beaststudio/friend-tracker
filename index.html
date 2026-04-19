@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friend tracker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="screen-picker" class="screen active picker">
+        <div class="list-group text-center w-100">
+          <a
+            href="#"
+            class="list-group-item list-group-item-action"
+            data-friend="paul">
+            Paul <span class="badge badge-online rounded-pill">Online</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action disabled"
+            tabindex="-1"
+            aria-disabled="true"
+            data-friend="john">
+            John <span class="badge badge-offline rounded-pill">Offline</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action"
+            data-friend="ringo">
+            Ringo <span class="badge badge-online rounded-pill">Online</span>
+          </a>
+          <a
+            href="#"
+            class="list-group-item list-group-item-action disabled"
+            tabindex="-1"
+            aria-disabled="true"
+            data-friend="george">
+            George <span class="badge badge-offline rounded-pill">Offline</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="screen-tracker" class="screen">
+        <button class="back-btn" id="backBtn">← BACK</button>
+        <div class="tracker" id="tracker">
+          <div class="tracker-name" id="trackerName"></div>
+          <div class="tracker-status" id="trackerStatus">LOCATING…</div>
+          <div class="tracker-distance" id="trackerDistance">– m</div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+  </body>
+</html>
