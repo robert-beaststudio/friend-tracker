@@ -42,10 +42,12 @@ body.state-neutral {
   align-items: center;
   gap: 0.5rem;
   border: 2px solid var(--color-background);
-  width: 500px;
-  height: 500px;
+  max-width: 500px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   color: var(--color-background);
+  padding: 2rem;
 }
 
 .picker {
@@ -98,7 +100,6 @@ body.state-neutral {
   pointer-events: none;
 }
 
-/* Screens */
 .screen {
   display: none;
 }
@@ -117,7 +118,6 @@ body.state-neutral {
   align-items: center;
 }
 
-/* Tracker text */
 .tracker-status {
   font-size: 2rem;
   font-weight: 600;
