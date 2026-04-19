@@ -1,15 +1,12 @@
-// ── Hardcoded friend coordinates (swap for real API later) ──────────────
 const FRIENDS = {
   paul: { lat: 55.607793, lng: 13.038032 },
   ringo: { lat: 55.610789, lng: 13.041733 },
 };
 
-// ── State ───────────────────────────────────────────────────────────────
 let target = null;
 let watchId = null;
 let prevDist = null;
 
-// ── DOM ─────────────────────────────────────────────────────────────────
 const screenPicker = document.getElementById("screen-picker");
 const screenTracker = document.getElementById("screen-tracker");
 const trackerName = document.getElementById("trackerName");
@@ -17,7 +14,6 @@ const trackerStatus = document.getElementById("trackerStatus");
 const trackerDist = document.getElementById("trackerDistance");
 const backBtn = document.getElementById("backBtn");
 
-// ── Haversine distance (metres) ─────────────────────────────────────────
 function distanceTo(a, b) {
   const R = 6371000;
   const φ1 = (a.lat * Math.PI) / 180;
@@ -29,12 +25,10 @@ function distanceTo(a, b) {
   return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 }
 
-// ── Update display ──────────────────────────────────────────────────────
 function update(pos) {
   const me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
   const dist = distanceTo(me, target);
 
-  // Determine state
   let state, statusText;
   if (dist < 10) {
     state = "good";
@@ -52,17 +46,14 @@ function update(pos) {
 
   prevDist = dist;
 
-  // Distance label
   trackerDist.textContent =
     dist >= 1000 ? `${(dist / 1000).toFixed(2)} km` : `${Math.round(dist)} m`;
 
   trackerStatus.textContent = statusText;
 
-  // Background colour
   document.body.className = `state-${state}`;
 }
 
-// ── Pick a friend ───────────────────────────────────────────────────────
 document.querySelectorAll(".list-group-item:not(.disabled)").forEach((el) => {
   el.addEventListener("click", (e) => {
     e.preventDefault();
@@ -85,7 +76,6 @@ document.querySelectorAll(".list-group-item:not(.disabled)").forEach((el) => {
   });
 });
 
-// ── Back button ─────────────────────────────────────────────────────────
 backBtn.addEventListener("click", () => {
   stopGPS();
   document.body.className = "";
@@ -93,7 +83,6 @@ backBtn.addEventListener("click", () => {
   screenPicker.classList.add("active");
 });
 
-// ── GPS ─────────────────────────────────────────────────────────────────
 function startGPS() {
   if (!navigator.geolocation) {
     trackerStatus.textContent = "GPS NOT SUPPORTED";
