@@ -9,50 +9,232 @@
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous" />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      :root {
+        --color-neutral: #cdc50a;
+        --color-red: red;
+        --color-blue: blue;
+        --color-green: green;
+        --color-background: #fafafa;
+        --color-text: #201307;
+        --color-pitch-black: #000000;
+      }
+
+      @font-face {
+        font-family: "Apfel Grotezk";
+        src: url("fonts/ApfelGrotezk-Mittel.woff2");
+        font-weight: 500;
+      }
+
+      body {
+        width: 100dvw;
+        height: 100dvh;
+        background-color: var(--color-neutral) !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Apfel Grotezk";
+        transition: background-color 0.8s ease;
+      }
+
+      body.state-good {
+        background-color: var(--color-green) !important;
+      }
+      body.state-bad {
+        background-color: var(--color-red) !important;
+      }
+      body.state-neutral {
+        background-color: var(--color-neutral) !important;
+      }
+
+      .tracker {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        border: 2px solid var(--color-background);
+        width: min(500px, 90vmin);
+        height: min(500px, 90vmin);
+        border-radius: 50%;
+        color: var(--color-background);
+      }
+
+      /* Arrow */
+      .tracker-arrow {
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        opacity: 0;
+      }
+      .tracker-arrow.visible {
+        opacity: 1;
+      }
+      .tracker-arrow svg {
+        display: block;
+        width: 48px;
+        height: 48px;
+        fill: var(--color-background);
+      }
+
+      .picker {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+      }
+
+      .badge-online {
+        background-color: var(--color-green);
+        font-size: 1rem !important;
+        margin-left: 2rem;
+      }
+
+      .badge-offline {
+        background-color: var(--color-red);
+        font-size: 1rem !important;
+        margin-left: 2rem;
+      }
+
+      .list-group {
+        border: 4px solid var(--color-background);
+        background-color: transparent !important;
+      }
+
+      .list-group-item {
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.5rem;
+        background-color: transparent;
+        color: var(--color-text);
+        cursor: pointer;
+        transition: background-color 0.15s;
+      }
+
+      .list-group-item:not(.disabled):hover {
+        background-color: color-mix(
+          in srgb,
+          var(--color-background) 20%,
+          transparent
+        );
+      }
+
+      .list-group-item.disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      /* Screens */
+      .screen {
+        display: none;
+      }
+      .screen.active {
+        display: flex;
+      }
+
+      #screen-picker {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      #screen-tracker {
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Tracker text */
+      .tracker-status {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-align: center;
+        line-height: 1.1;
+      }
+
+      .tracker-distance {
+        font-size: 1rem;
+        letter-spacing: 0.15em;
+        opacity: 0.75;
+      }
+
+      .tracker-name {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        opacity: 0.5;
+        margin-bottom: 0.5rem;
+      }
+
+      .back-btn {
+        position: fixed;
+        top: 1.25rem;
+        left: 1.5rem;
+        background: none;
+        border: none;
+        font-family: "Apfel Grotezk", sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        color: var(--color-background);
+        opacity: 0.55;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        padding: 0;
+        transition: opacity 0.15s;
+      }
+      .back-btn:hover {
+        opacity: 1;
+      }
+    </style>
   </head>
   <body>
-    <div class="container-fluid">
-      <div id="screen-picker" class="screen active picker">
-        <div class="list-group text-center w-100">
-          <a
-            href="#"
-            class="list-group-item list-group-item-action"
-            data-friend="paul">
-            Paul <span class="badge badge-online rounded-pill">Online</span>
-          </a>
-          <a
-            href="#"
-            class="list-group-item list-group-item-action disabled"
-            tabindex="-1"
-            aria-disabled="true"
-            data-friend="john">
-            John <span class="badge badge-offline rounded-pill">Offline</span>
-          </a>
-          <a
-            href="#"
-            class="list-group-item list-group-item-action"
-            data-friend="ringo">
-            Ringo <span class="badge badge-online rounded-pill">Online</span>
-          </a>
-          <a
-            href="#"
-            class="list-group-item list-group-item-action disabled"
-            tabindex="-1"
-            aria-disabled="true"
-            data-friend="george">
-            George <span class="badge badge-offline rounded-pill">Offline</span>
-          </a>
-        </div>
+    <!-- SCREEN 1: Friend picker -->
+    <div id="screen-picker" class="screen active picker col-sm-6 col-md-4">
+      <div class="list-group text-center w-100">
+        <a
+          href="#"
+          class="list-group-item list-group-item-action"
+          data-friend="paul">
+          Paul <span class="badge badge-online rounded-pill">Online</span>
+        </a>
+        <a
+          href="#"
+          class="list-group-item list-group-item-action disabled"
+          tabindex="-1"
+          aria-disabled="true"
+          data-friend="john">
+          John <span class="badge badge-offline rounded-pill">Offline</span>
+        </a>
+        <a
+          href="#"
+          class="list-group-item list-group-item-action"
+          data-friend="ringo">
+          Ringo <span class="badge badge-online rounded-pill">Online</span>
+        </a>
+        <a
+          href="#"
+          class="list-group-item list-group-item-action disabled"
+          tabindex="-1"
+          aria-disabled="true"
+          data-friend="george">
+          George <span class="badge badge-offline rounded-pill">Offline</span>
+        </a>
       </div>
+    </div>
 
-      <div id="screen-tracker" class="screen">
-        <button class="back-btn" id="backBtn">← BACK</button>
-        <div class="tracker" id="tracker">
-          <div class="tracker-name" id="trackerName"></div>
-          <div class="tracker-status" id="trackerStatus">LOCATING…</div>
-          <div class="tracker-distance" id="trackerDistance">– m</div>
+    <!-- SCREEN 2: Tracker -->
+    <div id="screen-tracker" class="screen">
+      <button class="back-btn" id="backBtn">← BACK</button>
+      <div class="tracker" id="tracker">
+        <div class="tracker-name" id="trackerName"></div>
+        <div class="tracker-arrow" id="trackerArrow">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 L20 20 L12 15 L4 20 Z" />
+          </svg>
         </div>
+        <div class="tracker-status" id="trackerStatus">LOCATING…</div>
+        <div class="tracker-distance" id="trackerDistance">– m</div>
       </div>
     </div>
 
@@ -60,6 +242,5 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"></script>
-    <script src="scripts.js"></script>
   </body>
 </html>
