@@ -81,7 +81,7 @@ function update(pos) {
 
   // Determine state
   let state, statusText;
-  if (dist < 10) {
+  if (dist < 3) {
     state = "good";
     statusText = "YOU'RE HERE!";
   } else if (prevDist !== null && dist < prevDist) {
