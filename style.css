@@ -42,12 +42,40 @@ body.state-neutral {
   align-items: center;
   gap: 0.5rem;
   border: 2px solid var(--color-background);
+  width: min(500px, 90vmin);
+  height: min(500px, 90vmin);
+  border-radius: 50%;
+  color: var(--color-background);
+}
+
+/* .tracker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid var(--color-background);
   max-width: 500px;
   height: auto;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   color: var(--color-background);
   padding: 2rem;
+} */
+
+/* Arrow */
+.tracker-arrow {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+}
+.tracker-arrow.visible {
+  opacity: 1;
+}
+.tracker-arrow svg {
+  display: block;
+  width: 48px;
+  height: 48px;
+  fill: var(--color-background);
 }
 
 .picker {
@@ -100,6 +128,7 @@ body.state-neutral {
   pointer-events: none;
 }
 
+/* Screens */
 .screen {
   display: none;
 }
@@ -118,6 +147,7 @@ body.state-neutral {
   align-items: center;
 }
 
+/* Tracker text */
 .tracker-status {
   font-size: 2rem;
   font-weight: 600;
