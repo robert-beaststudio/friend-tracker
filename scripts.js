@@ -1,6 +1,6 @@
 const FRIENDS = {
   paul: { lat: 55.607781, lng: 13.038325 },
-  ringo: { lat: 55.610747, lng: 13.041707 },
+  ringo: { lat: 55.610698, lng: 13.041881 },
   george: { lat: 55.612086, lng: 13.038585 },
 };
 
